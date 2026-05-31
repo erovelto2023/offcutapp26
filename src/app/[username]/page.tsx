@@ -244,7 +244,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             </div>
           )}
 
-          <div className="flex items-center gap-1.5 justify-center">
+          <div className="flex items-center gap-1 justify-center">
             <h2 className={`text-2xl font-black tracking-tight ${finalTextClass}`} style={finalTextStyle}>
               {profileSource.name || `@${lowerUsername}`}
             </h2>
