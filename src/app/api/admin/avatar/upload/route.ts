@@ -28,11 +28,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4. Validate File Size (Max 5MB)
-    const maxSize = 5 * 1024 * 1024;
+    // 4. Validate File Size (Max 50MB)
+    const maxSize = 50 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: "File too large. Max size allowed is 5MB." },
+        { error: "File too large. Max size allowed is 50MB." },
         { status: 400 }
       );
     }

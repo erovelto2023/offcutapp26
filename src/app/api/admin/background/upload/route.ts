@@ -28,11 +28,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4. Validate File Size (Max 8MB for larger high-res backgrounds)
-    const maxSize = 8 * 1024 * 1024;
+    // 4. Validate File Size (Max 50MB for larger high-res backgrounds)
+    const maxSize = 50 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: "File too large. Max size allowed is 8MB for backgrounds." },
+        { error: "File too large. Max size allowed is 50MB for backgrounds." },
         { status: 400 }
       );
     }
