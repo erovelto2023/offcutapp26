@@ -384,6 +384,7 @@ function AdminDashboard() {
       const res = await fetch(`/api/admin/avatar/upload?slug=${slug}`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -425,6 +426,7 @@ function AdminDashboard() {
       const res = await fetch(`/api/admin/avatar/upload?slug=${slug}`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -466,6 +468,7 @@ function AdminDashboard() {
       const res = await fetch(`/api/admin/background/upload?slug=${slug}`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -506,6 +509,7 @@ function AdminDashboard() {
       const res = await fetch(`/api/admin/background/upload?slug=${slug}`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       const data = await res.json();
