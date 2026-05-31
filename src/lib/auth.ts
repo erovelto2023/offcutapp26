@@ -46,10 +46,13 @@ export async function verifySessionToken(token: string): Promise<SessionPayload 
 export async function setSessionCookie(payload: SessionPayload) {
   const token = await createSessionToken(payload);
   const cookieStore = await cookies();
-  
+
+  // Check if running on HTTPS (secure cookies only work over HTTPS)
+  const isSecure = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
+
   cookieStore.set(COOKIE_NAME, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isSecure,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 7, // 7 days
