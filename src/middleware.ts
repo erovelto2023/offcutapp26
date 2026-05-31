@@ -19,7 +19,9 @@ export async function middleware(request: NextRequest) {
   if (isAdminRoute || isMembersRoute) {
     if (!sessionCookie || !sessionCookie.value) {
       const loginUrl = new URL(pathname.startsWith("/admin") ? "/admin/login" : "/login", request.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
+      // Use fixed callbackUrl to prevent /admin/admin redirect loops
+      const callbackUrl = pathname.startsWith("/admin") ? "/admin" : "/members";
+      loginUrl.searchParams.set("callbackUrl", callbackUrl);
       return NextResponse.redirect(loginUrl);
     }
 
