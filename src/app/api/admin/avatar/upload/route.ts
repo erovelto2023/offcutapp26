@@ -37,8 +37,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. Setup Save Directory
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "avatars");
+    // 5. Setup Save Directory (outside public folder)
+    const uploadDir = path.join(process.cwd(), "uploads", "avatars");
     await mkdir(uploadDir, { recursive: true });
 
     // 6. Generate Safe & Unique Filename
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
 
-    const publicUrl = `/uploads/avatars/${fileName}`;
+    const publicUrl = `/api/uploads/avatars/${fileName}`;
 
     return NextResponse.json({
       success: true,

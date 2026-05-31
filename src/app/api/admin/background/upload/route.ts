@@ -37,8 +37,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. Setup Save Directory
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "backgrounds");
+    // 5. Setup Save Directory (outside public folder)
+    const uploadDir = path.join(process.cwd(), "uploads", "backgrounds");
     await mkdir(uploadDir, { recursive: true });
 
     // 6. Generate Safe & Unique Filename
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
 
-    const publicUrl = `/uploads/backgrounds/${fileName}`;
+    const publicUrl = `/api/uploads/backgrounds/${fileName}`;
 
     return NextResponse.json({
       success: true,
