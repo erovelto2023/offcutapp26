@@ -129,7 +129,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           <AlertTriangle className="w-12 h-12 text-rose-500 mx-auto mb-4" />
           <h2 className="text-2xl font-black text-white tracking-tight">Username Not Found</h2>
           <p className="text-zinc-400 text-sm mt-3 leading-relaxed">
-            The profile page <span className="text-rose-400 font-bold">offcut.li/{username}</span> is currently unclaimed or has been deactivated.
+            The profile page <span className="text-rose-400 font-bold">offcutapp.com/{username}</span> is currently unclaimed or has been deactivated.
           </p>
           <div className="mt-8 flex flex-col gap-3">
             <Link

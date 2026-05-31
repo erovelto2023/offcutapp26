@@ -116,7 +116,7 @@ export default function MembersDashboard() {
   };
 
   const handleDeleteTree = async (id: string, slugName: string) => {
-    if (!confirm(`WARNING: Are you sure you want to permanently delete offcut.li/${slugName}? All links and analytics will be destroyed.`)) return;
+    if (!confirm(`WARNING: Are you sure you want to permanently delete offcutapp.com/${slugName}? All links and analytics will be destroyed.`)) return;
 
     try {
       const res = await fetch(`/api/admin/trees?id=${id}`, { method: "DELETE" });
@@ -126,7 +126,7 @@ export default function MembersDashboard() {
       }
 
       setTrees((prev) => prev.filter((t) => t._id !== id));
-      toast.success(`offcut.li/${slugName} successfully deleted.`);
+      toast.success(`offcutapp.com/${slugName} successfully deleted.`);
     } catch (err: any) {
       toast.error(err.message || "Failed to delete profile");
     }
@@ -262,7 +262,7 @@ export default function MembersDashboard() {
                       </CardTitle>
                       <CardDescription className="text-zinc-400 mt-1 flex items-center gap-1">
                         <Globe className="w-3.5 h-3.5 text-zinc-500" />
-                        offcut.li/<span className="text-violet-400 font-medium">{tree.slug}</span>
+                        offcutapp.com/<span className="text-violet-400 font-medium">{tree.slug}</span>
                       </CardDescription>
                     </div>
 
@@ -343,7 +343,7 @@ export default function MembersDashboard() {
                   </Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm font-semibold select-none">
-                      offcut.li/
+                      offcutapp.com/
                     </span>
                     <Input
                       id="slug"

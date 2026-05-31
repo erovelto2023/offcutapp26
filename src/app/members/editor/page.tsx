@@ -840,7 +840,7 @@ function AdminDashboard() {
               <span className="font-extrabold text-sm text-white tracking-tight">Offcut Links Studio</span>
               <span className="text-[10px] text-zinc-400 flex items-center gap-1">
                 <Globe className="w-3 h-3 text-violet-400" />
-                Public: <a href={`/${slug}`} target="_blank" className="underline text-zinc-300 hover:text-white">offcut.li/{slug}</a>
+                Public: <a href={`/${slug}`} target="_blank" className="underline text-zinc-300 hover:text-white">offcutapp.com/{slug}</a>
               </span>
             </div>
           </div>

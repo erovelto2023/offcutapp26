@@ -100,7 +100,7 @@ export default function RegisterPage() {
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 font-medium select-none text-sm">
-                    offcut.li/
+                    offcutapp.com/
                   </span>
                   <Input
                     id="username"
