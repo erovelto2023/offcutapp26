@@ -73,6 +73,11 @@ const SocialIcons = {
       <circle cx="4" cy="4" r="2" />
     </svg>
   ),
+  tiktok: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  ),
 };
 import {
   LineChart,
@@ -1997,6 +2002,24 @@ function AdminDashboard() {
 
                   <div className="space-y-2">
                     <Label className="text-zinc-300 text-xs flex items-center gap-1.5">
+                      <SocialIcons.tiktok className="w-3.5 h-3.5 text-white" />
+                      TikTok Username
+                    </Label>
+                    <Input
+                      placeholder="e.g. @username"
+                      value={profile?.socials?.tiktok || ""}
+                      onChange={(e) =>
+                        setProfile((p) =>
+                          p ? { ...p, socials: { ...p.socials, tiktok: e.target.value } } : null
+                        )
+                      }
+                      onBlur={() => handleUpdateProfile({ socials: profile?.socials })}
+                      className="bg-zinc-950 border-white/10 text-white text-xs"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-zinc-300 text-xs flex items-center gap-1.5">
                       <Mail className="w-3.5 h-3.5 text-violet-400" />
                       Contact Email
                     </Label>
@@ -2974,6 +2997,7 @@ function AdminDashboard() {
                   {profile.socials.github && <SocialIcons.github className="w-3.5 h-3.5" />}
                   {profile.socials.youtube && <SocialIcons.youtube className="w-3.5 h-3.5" />}
                   {profile.socials.linkedin && <SocialIcons.linkedin className="w-3.5 h-3.5" />}
+                  {profile.socials.tiktok && <SocialIcons.tiktok className="w-3.5 h-3.5" />}
                   {profile.socials.email && <Mail className="w-3.5 h-3.5" />}
                 </div>
               )}
