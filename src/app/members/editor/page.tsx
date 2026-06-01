@@ -343,7 +343,8 @@ function AdminDashboard() {
       }
 
       const saved = await res.json();
-      setProfile(saved);
+      // Merge saved data with current profile to preserve local state
+      setProfile((current) => ({ ...current, ...saved }));
       toast.success("Appearance settings synced successfully!");
     } catch (err: any) {
       toast.error(err.message || "Failed to update profile settings.");
@@ -2138,10 +2139,8 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabSelectedColor || "#8b5cf6"}
-                                onChange={(e) => {
-                                  handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value });
-                                  setTimeout(() => handleUpdateThemeSettings({ tabSelectedColor: e.target.value }), 100);
-                                }}
+                                onChange={(e) => handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value })}
+                                onBlur={(e) => handleUpdateThemeSettings({ tabSelectedColor: (e.target as HTMLInputElement).value })}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
@@ -2160,10 +2159,8 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"}
-                                onChange={(e) => {
-                                  handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value });
-                                  setTimeout(() => handleUpdateThemeSettings({ tabUnselectedColor: e.target.value }), 100);
-                                }}
+                                onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
+                                onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: (e.target as HTMLInputElement).value })}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
