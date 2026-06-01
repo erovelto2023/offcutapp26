@@ -95,7 +95,7 @@ export default function TabsLinksFilter({
             onClick={() => setActiveTab("All")}
             className="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap cursor-pointer active:scale-95"
             style={{
-              backgroundColor: activeTab === "All" ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "#0d0d0d"),
+              backgroundColor: activeTab === "All" ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "#1e1e1e"),
               borderColor: activeTab === "All" ? (tabSelectedColor || accentColor) : "rgba(255, 255, 255, 0.1)",
               color: activeTab === "All" ? "#ffffff" : textColor || "#ffffff",
               boxShadow: activeTab === "All" ? `0 4px 12px ${(tabSelectedColor || accentColor)}40` : "none"
@@ -110,7 +110,7 @@ export default function TabsLinksFilter({
               onClick={() => setActiveTab(tabName)}
               className="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap cursor-pointer active:scale-95"
               style={{
-                backgroundColor: activeTab === tabName ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "#0d0d0d"),
+                backgroundColor: activeTab === tabName ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "#1e1e1e"),
                 borderColor: activeTab === tabName ? (tabSelectedColor || accentColor) : "rgba(255, 255, 255, 0.1)",
                 color: activeTab === tabName ? "#ffffff" : textColor || "#ffffff",
                 boxShadow: activeTab === tabName ? `0 4px 12px ${(tabSelectedColor || accentColor)}40` : "none"

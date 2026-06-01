@@ -109,7 +109,7 @@ const THEME_SETTINGS_DEFAULT = {
   accentColor: "#8b5cf6",
   buttonColor: "",
   tabSelectedColor: "#8b5cf6",
-  tabUnselectedColor: "#0d0d0d",
+  tabUnselectedColor: "#1e1e1e",
   widgetCardStyle: undefined as "glassmorphic" | "flat" | "outline" | "neon" | undefined,
   widgetCardRoundness: undefined as "rounded-none" | "rounded-xl" | "rounded-full" | undefined,
   widgetAccentColor: undefined as string | undefined,
@@ -2159,7 +2159,7 @@ function AdminDashboard() {
                             <div className="flex items-center gap-2 mt-1">
                               <input
                                 type="color"
-                                value={profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"}
+                                value={profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"}
                                 onChange={(e) => {
                                   handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value });
                                   handleUpdateThemeSettings({ tabUnselectedColor: e.target.value });
@@ -2168,7 +2168,7 @@ function AdminDashboard() {
                               />
                               <Input
                                 type="text"
-                                value={profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"}
+                                value={profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"}
                                 onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
                                 onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: e.target.value })}
                                 className="bg-zinc-950 border-white/10 text-xs h-8 text-white font-mono"
@@ -3319,7 +3319,7 @@ function AdminDashboard() {
                     onClick={() => setActivePreviewTabFilter("All")}
                     className="px-2.5 py-1 rounded-full text-[9px] font-bold transition-all border whitespace-nowrap cursor-pointer"
                     style={{
-                      backgroundColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"),
+                      backgroundColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"),
                       borderColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : "rgba(255, 255, 255, 0.1)",
                       color: activePreviewTabFilter === "All" ? "#ffffff" : (profile?.themeSettings?.textColor || "#ffffff")
                     }}
@@ -3333,7 +3333,7 @@ function AdminDashboard() {
                       onClick={() => setActivePreviewTabFilter(tabName)}
                       className="px-2.5 py-1 rounded-full text-[9px] font-bold transition-all border whitespace-nowrap cursor-pointer"
                       style={{
-                        backgroundColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"),
+                        backgroundColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"),
                         borderColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : "rgba(255, 255, 255, 0.1)",
                         color: activePreviewTabFilter === tabName ? "#ffffff" : (profile?.themeSettings?.textColor || "#ffffff")
                       }}
