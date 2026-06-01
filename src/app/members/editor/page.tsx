@@ -256,6 +256,7 @@ function AdminDashboard() {
   const [customIcons, setCustomIcons] = useState<string[]>([]);
   const [uploadingIcon, setUploadingIcon] = useState(false);
   const [iconOption, setIconOption] = useState<"emoji" | "upload">("emoji");
+  const [editIconOption, setEditIconOption] = useState<"emoji" | "upload">("emoji");
 
   // Fetch initial profile & links & analytics data
   useEffect(() => {
@@ -523,7 +524,12 @@ function AdminDashboard() {
       }
 
       setCustomIcons((prev) => [...prev, data.url]);
-      setNewIcon(data.url);
+      // Set icon based on which mode we're in
+      if (editingLinkId) {
+        setEditIcon(data.url);
+      } else {
+        setNewIcon(data.url);
+      }
       toast.success("Custom icon uploaded!");
     } catch (err: any) {
       toast.error(err.message || "Failed to upload icon");
@@ -1272,17 +1278,113 @@ function AdminDashboard() {
                             <div className="flex-1 min-w-0">
                               {editingLinkId === link._id ? (
                                 <div className="space-y-3">
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                    <div className="col-span-1">
-                                      <Label className="text-[10px] text-zinc-400">Icon</Label>
-                                      <Input
-                                        value={editIcon}
-                                        onChange={(e) => setEditIcon(e.target.value)}
-                                        className="bg-zinc-950 border-white/15 text-xs h-8 text-center"
-                                        placeholder="Emoji or URL"
-                                      />
+                                  <div className="space-y-2">
+                                    <Label className="text-[10px] text-zinc-400">Choose Icon</Label>
+                                    
+                                    {/* Icon Type Toggle */}
+                                    <div className="flex gap-2 mb-2">
+                                      <button
+                                        type="button"
+                                        onClick={() => setEditIconOption("emoji")}
+                                        className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                                          editIconOption === "emoji"
+                                            ? "bg-violet-600 text-white"
+                                            : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                                        }`}
+                                      >
+                                        Emoji
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setEditIconOption("upload")}
+                                        className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                                          editIconOption === "upload"
+                                            ? "bg-violet-600 text-white"
+                                            : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                                        }`}
+                                      >
+                                        Custom Image
+                                      </button>
                                     </div>
-                                    <div className="col-span-2">
+
+                                    {editIconOption === "emoji" ? (
+                                      <div className="flex flex-wrap gap-1 items-center">
+                                        <input
+                                          type="text"
+                                          maxLength={3}
+                                          value={editIcon}
+                                          onChange={(e) => setEditIcon(e.target.value)}
+                                          className="w-10 h-7 rounded bg-zinc-950 border border-white/10 text-center text-sm text-white focus:outline-none focus:border-violet-500"
+                                        />
+                                        <div className="flex gap-1 overflow-x-auto py-1">
+                                          {EMOJI_PRESETS.map((emoji) => (
+                                            <button
+                                              key={emoji}
+                                              type="button"
+                                              onClick={() => setEditIcon(emoji)}
+                                              className={`w-7 h-7 rounded flex items-center justify-center text-xs border hover:bg-white/10 transition-colors ${
+                                                editIcon === emoji ? "border-violet-500 bg-violet-500/25" : "border-white/10 bg-zinc-950/40"
+                                              }`}
+                                            >
+                                              {emoji}
+                                            </button>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                          <input
+                                            type="file"
+                                            id="editIconUpload"
+                                            accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                                            onChange={handleIconUpload}
+                                            className="hidden"
+                                            disabled={uploadingIcon}
+                                          />
+                                          <label
+                                            htmlFor="editIconUpload"
+                                            className={`flex-1 py-1.5 px-3 rounded border border-dashed border-white/20 text-center text-[10px] cursor-pointer transition-colors ${
+                                              uploadingIcon
+                                                ? "opacity-50 cursor-not-allowed"
+                                                : "hover:border-violet-500 hover:bg-violet-500/10"
+                                            }`}
+                                          >
+                                            {uploadingIcon ? "Uploading..." : "Click to upload icon"}
+                                          </label>
+                                        </div>
+                                        
+                                        {/* Show uploaded custom icons */}
+                                        {customIcons.length > 0 && (
+                                          <div className="flex gap-1 overflow-x-auto py-1">
+                                            {customIcons.map((iconUrl, index) => (
+                                              <button
+                                                key={index}
+                                                type="button"
+                                                onClick={() => setEditIcon(iconUrl)}
+                                                className={`w-7 h-7 rounded flex items-center justify-center border hover:bg-white/10 transition-colors ${
+                                                  editIcon === iconUrl ? "border-violet-500 bg-violet-500/25" : "border-white/10 bg-zinc-950/40"
+                                                }`}
+                                              >
+                                                <img src={iconUrl} alt="" className="w-4 h-4 object-contain" />
+                                              </button>
+                                            ))}
+                                          </div>
+                                        )}
+                                        
+                                        {/* Show current selected custom icon */}
+                                        {editIcon.startsWith("/api/uploads/icons/") && (
+                                          <div className="flex items-center gap-2 text-[10px] text-zinc-400">
+                                            <img src={editIcon} alt="" className="w-5 h-5 object-contain" />
+                                            <span>Custom icon selected</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    <div className="space-y-1">
                                       <Label className="text-[10px] text-zinc-400">Title</Label>
                                       <Input
                                         value={editTitle}
@@ -1290,14 +1392,14 @@ function AdminDashboard() {
                                         className="bg-zinc-950 border-white/15 text-xs h-8"
                                       />
                                     </div>
-                                  </div>
-                                  <div>
-                                    <Label className="text-[10px] text-zinc-400">URL</Label>
-                                    <Input
-                                      value={editUrl}
-                                      onChange={(e) => setEditUrl(e.target.value)}
-                                      className="bg-zinc-950 border-white/15 text-xs h-8"
-                                    />
+                                    <div className="space-y-1">
+                                      <Label className="text-[10px] text-zinc-400">URL</Label>
+                                      <Input
+                                        value={editUrl}
+                                        onChange={(e) => setEditUrl(e.target.value)}
+                                        className="bg-zinc-950 border-white/15 text-xs h-8"
+                                      />
+                                    </div>
                                   </div>
                                   
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -1398,6 +1500,7 @@ function AdminDashboard() {
                                     setEditTitle(link.title);
                                     setEditUrl(link.url);
                                     setEditIcon(link.icon || "✨");
+                                    setEditIconOption(link.icon?.startsWith("/api/uploads/icons/") ? "upload" : "emoji");
                                     setEditAnimationStyle(link.animationStyle || "none");
                                     setEditLinkTab(link.tab || "");
                                   }}
