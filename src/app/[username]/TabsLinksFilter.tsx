@@ -23,6 +23,8 @@ interface TabsLinksFilterProps {
   textColor: string;
   accentColor: string;
   buttonColor?: string;
+  tabSelectedColor?: string;
+  tabUnselectedColor?: string;
 }
 
 export default function TabsLinksFilter({
@@ -36,6 +38,8 @@ export default function TabsLinksFilter({
   textColor,
   accentColor,
   buttonColor,
+  tabSelectedColor,
+  tabUnselectedColor,
 }: TabsLinksFilterProps) {
   const [activeTab, setActiveTab] = useState("All");
 
@@ -91,10 +95,10 @@ export default function TabsLinksFilter({
             onClick={() => setActiveTab("All")}
             className="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap cursor-pointer active:scale-95"
             style={{
-              backgroundColor: activeTab === "All" ? accentColor : "rgba(255, 255, 255, 0.05)",
-              borderColor: activeTab === "All" ? accentColor : "rgba(255, 255, 255, 0.1)",
+              backgroundColor: activeTab === "All" ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "rgba(255, 255, 255, 0.05)"),
+              borderColor: activeTab === "All" ? (tabSelectedColor || accentColor) : "rgba(255, 255, 255, 0.1)",
               color: activeTab === "All" ? "#ffffff" : textColor || "#ffffff",
-              boxShadow: activeTab === "All" ? `0 4px 12px ${accentColor}40` : "none"
+              boxShadow: activeTab === "All" ? `0 4px 12px ${(tabSelectedColor || accentColor)}40` : "none"
             }}
           >
             All
@@ -106,10 +110,10 @@ export default function TabsLinksFilter({
               onClick={() => setActiveTab(tabName)}
               className="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap cursor-pointer active:scale-95"
               style={{
-                backgroundColor: activeTab === tabName ? accentColor : "rgba(255, 255, 255, 0.05)",
-                borderColor: activeTab === tabName ? accentColor : "rgba(255, 255, 255, 0.1)",
+                backgroundColor: activeTab === tabName ? (tabSelectedColor || accentColor) : (tabUnselectedColor || "rgba(255, 255, 255, 0.05)"),
+                borderColor: activeTab === tabName ? (tabSelectedColor || accentColor) : "rgba(255, 255, 255, 0.1)",
                 color: activeTab === tabName ? "#ffffff" : textColor || "#ffffff",
-                boxShadow: activeTab === tabName ? `0 4px 12px ${accentColor}40` : "none"
+                boxShadow: activeTab === tabName ? `0 4px 12px ${(tabSelectedColor || accentColor)}40` : "none"
               }}
             >
               {tabName}
