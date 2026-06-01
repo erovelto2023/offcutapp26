@@ -2138,8 +2138,10 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabSelectedColor || "#8b5cf6"}
-                                onChange={(e) => handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value })}
-                                onBlur={(e) => handleUpdateThemeSettings({ tabSelectedColor: (e.target as HTMLInputElement).value })}
+                                onChange={(e) => {
+                                  handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value });
+                                  handleUpdateThemeSettings({ tabSelectedColor: e.target.value });
+                                }}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
@@ -2158,14 +2160,15 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"}
-                                onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
-                                onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: (e.target as HTMLInputElement).value })}
+                                onChange={(e) => {
+                                  handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value });
+                                  handleUpdateThemeSettings({ tabUnselectedColor: e.target.value });
+                                }}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
                                 type="text"
-                                placeholder="#0d0d0d"
-                                value={profile?.themeSettings?.tabUnselectedColor || ""}
+                                value={profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"}
                                 onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
                                 onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: e.target.value })}
                                 className="bg-zinc-950 border-white/10 text-xs h-8 text-white font-mono"
