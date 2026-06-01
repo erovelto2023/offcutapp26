@@ -2138,10 +2138,8 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabSelectedColor || "#8b5cf6"}
-                                onChange={(e) => {
-                                  handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value });
-                                  handleUpdateThemeSettings({ tabSelectedColor: e.target.value });
-                                }}
+                                onChange={(e) => handleLocalThemeSettingsChange({ tabSelectedColor: e.target.value })}
+                                onBlur={(e) => handleUpdateThemeSettings({ tabSelectedColor: (e.target as HTMLInputElement).value })}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
@@ -2160,10 +2158,8 @@ function AdminDashboard() {
                               <input
                                 type="color"
                                 value={profile?.themeSettings?.tabUnselectedColor || "#1e1e1e"}
-                                onChange={(e) => {
-                                  handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value });
-                                  handleUpdateThemeSettings({ tabUnselectedColor: e.target.value });
-                                }}
+                                onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
+                                onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: (e.target as HTMLInputElement).value })}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
