@@ -109,7 +109,7 @@ const THEME_SETTINGS_DEFAULT = {
   accentColor: "#8b5cf6",
   buttonColor: "",
   tabSelectedColor: "#8b5cf6",
-  tabUnselectedColor: "rgba(255, 255, 255, 0.05)",
+  tabUnselectedColor: "#0d0d0d",
   widgetCardStyle: undefined as "glassmorphic" | "flat" | "outline" | "neon" | undefined,
   widgetCardRoundness: undefined as "rounded-none" | "rounded-xl" | "rounded-full" | undefined,
   widgetAccentColor: undefined as string | undefined,
@@ -2157,14 +2157,14 @@ function AdminDashboard() {
                             <div className="flex items-center gap-2 mt-1">
                               <input
                                 type="color"
-                                value={profile?.themeSettings?.tabUnselectedColor || "rgba(255, 255, 255, 0.05)"}
+                                value={profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"}
                                 onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
-                                onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: e.target.value })}
+                                onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: (e.target as HTMLInputElement).value })}
                                 className="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent"
                               />
                               <Input
                                 type="text"
-                                placeholder="rgba(255, 255, 255, 0.05)"
+                                placeholder="#0d0d0d"
                                 value={profile?.themeSettings?.tabUnselectedColor || ""}
                                 onChange={(e) => handleLocalThemeSettingsChange({ tabUnselectedColor: e.target.value })}
                                 onBlur={(e) => handleUpdateThemeSettings({ tabUnselectedColor: e.target.value })}
@@ -3316,7 +3316,7 @@ function AdminDashboard() {
                     onClick={() => setActivePreviewTabFilter("All")}
                     className="px-2.5 py-1 rounded-full text-[9px] font-bold transition-all border whitespace-nowrap cursor-pointer"
                     style={{
-                      backgroundColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "rgba(255, 255, 255, 0.05)"),
+                      backgroundColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"),
                       borderColor: activePreviewTabFilter === "All" ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : "rgba(255, 255, 255, 0.1)",
                       color: activePreviewTabFilter === "All" ? "#ffffff" : (profile?.themeSettings?.textColor || "#ffffff")
                     }}
@@ -3330,7 +3330,7 @@ function AdminDashboard() {
                       onClick={() => setActivePreviewTabFilter(tabName)}
                       className="px-2.5 py-1 rounded-full text-[9px] font-bold transition-all border whitespace-nowrap cursor-pointer"
                       style={{
-                        backgroundColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "rgba(255, 255, 255, 0.05)"),
+                        backgroundColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : (profile?.themeSettings?.tabUnselectedColor || "#0d0d0d"),
                         borderColor: activePreviewTabFilter === tabName ? (profile?.themeSettings?.tabSelectedColor || profile?.themeSettings?.accentColor || "#8b5cf6") : "rgba(255, 255, 255, 0.1)",
                         color: activePreviewTabFilter === tabName ? "#ffffff" : (profile?.themeSettings?.textColor || "#ffffff")
                       }}
