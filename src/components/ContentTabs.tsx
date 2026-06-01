@@ -21,6 +21,7 @@ interface ContentTabsProps {
   textColor: string;
   cardRoundness: string;
   cardStyle: string;
+  buttonColor?: string;
   isCustomTheme: boolean;
   themeCardBg: string;
   themeBtnHover: string;
@@ -39,6 +40,7 @@ export default function ContentTabs({
   textColor,
   cardRoundness,
   cardStyle,
+  buttonColor,
   isCustomTheme,
   themeCardBg,
   themeBtnHover,
@@ -100,6 +102,7 @@ export default function ContentTabs({
           cardStyle={cardStyle}
           textColor={textColor}
           accentColor={accentColor}
+          buttonColor={buttonColor}
         />
       ) : (
         <ModularWidgets

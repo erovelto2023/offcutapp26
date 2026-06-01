@@ -372,8 +372,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 tabs={profileSource.tabs || []}
                 accentColor={calculatedAccentColor}
                 textColor={isCustomTheme ? customSettings.textColor : "#ffffff"}
-                cardRoundness="rounded-xl"
-                cardStyle="glassmorphic"
+                cardRoundness={isCustomTheme ? customSettings.cardRoundness : "rounded-xl"}
+                cardStyle={isCustomTheme ? customSettings.cardStyle : "glassmorphic"}
+                buttonColor={isCustomTheme ? customSettings.buttonColor : undefined}
                 isCustomTheme={isCustomTheme}
                 themeCardBg={theme.cardBg}
                 themeBtnHover={theme.btnHover}

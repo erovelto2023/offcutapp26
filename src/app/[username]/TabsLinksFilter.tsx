@@ -22,6 +22,7 @@ interface TabsLinksFilterProps {
   cardStyle: string;
   textColor: string;
   accentColor: string;
+  buttonColor?: string;
 }
 
 export default function TabsLinksFilter({
@@ -34,6 +35,7 @@ export default function TabsLinksFilter({
   cardStyle,
   textColor,
   accentColor,
+  buttonColor,
 }: TabsLinksFilterProps) {
   const [activeTab, setActiveTab] = useState("All");
 
@@ -64,6 +66,9 @@ export default function TabsLinksFilter({
         styles.boxShadow = `0 0 12px ${accentColor}40`;
       } else {
         styles.borderColor = `${textColor}25`;
+      }
+      if (buttonColor) {
+        styles.backgroundColor = buttonColor;
       }
       styles["--accent-color" as any] = accentColor;
     } else {
