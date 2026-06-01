@@ -139,7 +139,11 @@ export default function TabsLinksFilter({
           >
             {link.icon && (
               <span className="absolute left-6 text-xl select-none group-hover:scale-110 transition-transform">
-                {link.icon}
+                {link.icon.startsWith("/api/uploads/icons/") ? (
+                  <img src={link.icon} alt="" className="w-5 h-5 object-contain" />
+                ) : (
+                  link.icon
+                )}
               </span>
             )}
             <span className="truncate pr-6 pl-6">{link.title}</span>

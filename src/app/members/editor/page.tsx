@@ -252,6 +252,11 @@ function AdminDashboard() {
   const [bgOption, setBgOption] = useState<"upload" | "url">("upload");
   const [uploadingBg, setUploadingBg] = useState(false);
 
+  // Custom Icon states
+  const [customIcons, setCustomIcons] = useState<string[]>([]);
+  const [uploadingIcon, setUploadingIcon] = useState(false);
+  const [iconOption, setIconOption] = useState<"emoji" | "upload">("emoji");
+
   // Fetch initial profile & links & analytics data
   useEffect(() => {
     if (!slug) return;
@@ -482,6 +487,48 @@ function AdminDashboard() {
       toast.error(err.message || "Failed to upload background image");
     } finally {
       setUploadingBg(false);
+    }
+  };
+
+  // Icon Upload Handler
+  const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Unsupported file type. JPEG, PNG, WEBP, GIF, and SVG are allowed.");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File is too large. Maximum size is 5MB for icons.");
+      return;
+    }
+
+    setUploadingIcon(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/admin/icons/upload", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to upload icon");
+      }
+
+      setCustomIcons((prev) => [...prev, data.url]);
+      setNewIcon(data.url);
+      toast.success("Custom icon uploaded!");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to upload icon");
+    } finally {
+      setUploadingIcon(false);
     }
   };
 
@@ -1040,30 +1087,108 @@ function AdminDashboard() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-zinc-300 text-xs">Choose Emoji Icon</Label>
-                      <div className="flex flex-wrap gap-2 items-center">
-                        <input
-                          type="text"
-                          maxLength={3}
-                          value={newIcon}
-                          onChange={(e) => setNewIcon(e.target.value)}
-                          className="w-12 h-9 rounded-lg bg-zinc-950 border border-white/10 text-center text-md text-white focus:outline-none focus:border-violet-500"
-                        />
-                        <div className="flex gap-1.5 overflow-x-auto py-1">
-                          {EMOJI_PRESETS.map((emoji) => (
-                            <button
-                              key={emoji}
-                              type="button"
-                              onClick={() => setNewIcon(emoji)}
-                              className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm border hover:bg-white/10 transition-colors ${
-                                newIcon === emoji ? "border-violet-500 bg-violet-500/25" : "border-white/10 bg-zinc-950/40"
+                      <Label className="text-zinc-300 text-xs">Choose Icon</Label>
+                      
+                      {/* Icon Type Toggle */}
+                      <div className="flex gap-2 mb-2">
+                        <button
+                          type="button"
+                          onClick={() => setIconOption("emoji")}
+                          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors ${
+                            iconOption === "emoji"
+                              ? "bg-violet-600 text-white"
+                              : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                          }`}
+                        >
+                          Emoji
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIconOption("upload")}
+                          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors ${
+                            iconOption === "upload"
+                              ? "bg-violet-600 text-white"
+                              : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                          }`}
+                        >
+                          Custom Image
+                        </button>
+                      </div>
+
+                      {iconOption === "emoji" ? (
+                        <div className="flex flex-wrap gap-2 items-center">
+                          <input
+                            type="text"
+                            maxLength={3}
+                            value={newIcon}
+                            onChange={(e) => setNewIcon(e.target.value)}
+                            className="w-12 h-9 rounded-lg bg-zinc-950 border border-white/10 text-center text-md text-white focus:outline-none focus:border-violet-500"
+                          />
+                          <div className="flex gap-1.5 overflow-x-auto py-1">
+                            {EMOJI_PRESETS.map((emoji) => (
+                              <button
+                                key={emoji}
+                                type="button"
+                                onClick={() => setNewIcon(emoji)}
+                                className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm border hover:bg-white/10 transition-colors ${
+                                  newIcon === emoji ? "border-violet-500 bg-violet-500/25" : "border-white/10 bg-zinc-950/40"
+                                }`}
+                              >
+                                {emoji}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="file"
+                              id="iconUpload"
+                              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                              onChange={handleIconUpload}
+                              className="hidden"
+                              disabled={uploadingIcon}
+                            />
+                            <label
+                              htmlFor="iconUpload"
+                              className={`flex-1 py-2 px-4 rounded-lg border border-dashed border-white/20 text-center text-xs cursor-pointer transition-colors ${
+                                uploadingIcon
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : "hover:border-violet-500 hover:bg-violet-500/10"
                               }`}
                             >
-                              {emoji}
-                            </button>
-                          ))}
+                              {uploadingIcon ? "Uploading..." : "Click to upload icon"}
+                            </label>
+                          </div>
+                          
+                          {/* Show uploaded custom icons */}
+                          {customIcons.length > 0 && (
+                            <div className="flex gap-2 overflow-x-auto py-1">
+                              {customIcons.map((iconUrl, index) => (
+                                <button
+                                  key={index}
+                                  type="button"
+                                  onClick={() => setNewIcon(iconUrl)}
+                                  className={`w-8 h-8 rounded-lg flex items-center justify-center border hover:bg-white/10 transition-colors ${
+                                    newIcon === iconUrl ? "border-violet-500 bg-violet-500/25" : "border-white/10 bg-zinc-950/40"
+                                  }`}
+                                >
+                                  <img src={iconUrl} alt="" className="w-5 h-5 object-contain" />
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                          
+                          {/* Show current selected custom icon */}
+                          {newIcon.startsWith("/api/uploads/icons/") && (
+                            <div className="flex items-center gap-2 text-xs text-zinc-400">
+                              <img src={newIcon} alt="" className="w-6 h-6 object-contain" />
+                              <span>Custom icon selected</span>
+                            </div>
+                          )}
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -1149,11 +1274,12 @@ function AdminDashboard() {
                                 <div className="space-y-3">
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                     <div className="col-span-1">
-                                      <Label className="text-[10px] text-zinc-400">Emoji</Label>
+                                      <Label className="text-[10px] text-zinc-400">Icon</Label>
                                       <Input
                                         value={editIcon}
                                         onChange={(e) => setEditIcon(e.target.value)}
                                         className="bg-zinc-950 border-white/15 text-xs h-8 text-center"
+                                        placeholder="Emoji or URL"
                                       />
                                     </div>
                                     <div className="col-span-2">
